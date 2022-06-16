@@ -1,7 +1,7 @@
 import React from 'react'
 import "../styles/cards.css"
 
-const Flat = ({flat}) => {
+const Flat = ({flat, selectedFlat}) => {
 
   return (
     <div className="card">
@@ -14,6 +14,7 @@ const Flat = ({flat}) => {
         CHF {flat.price}
         </p>
       </div>
+      <button className='btn btn-primary btn-sm'>Visit</button>
     </div>
   )
 }
