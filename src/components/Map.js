@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import "../styles/map.css"
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API
+// import ReactMapGL, { Marker } from 'react-map-gl';
 
 
 const Map = () => {
@@ -13,13 +14,16 @@ const Map = () => {
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
-      map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [lng, lat],
-      zoom: zoom
+
+    map.current = new mapboxgl.Map({
+    container: mapContainer.current,
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [lng, lat],
+    zoom: zoom
     });
+
   });
+
 
   useEffect(() => {
     if (!map.current) return; // wait for map to initialize
