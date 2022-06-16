@@ -4,7 +4,7 @@ import "../styles/cards.css"
 const Flat = ({flat, selectedFlat}) => {
 
   return (
-    <div className="card">
+    <div className="card card-category ">
       <img src={flat.imgURL} className="card-img-top" alt="..."/>
       <div className="card-body">
         <h6 className="card-text">
