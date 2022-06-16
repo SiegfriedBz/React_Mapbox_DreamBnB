@@ -1,9 +1,9 @@
 import { useState } from 'react';
+import NavBar from './components/NavBar';
 import FlatList from './components/FlatList';
 import Map from './components/Map';
 import { v4 as uuidv4 } from 'uuid';
 import '../src/styles/index.css';
-
 
 function App() {
 
@@ -23,6 +23,7 @@ function App() {
 
   return (
     <div className="App">
+      <NavBar />
       <div className="container">
         <div className="row">
           <div className="col-md-8">

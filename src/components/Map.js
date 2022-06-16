@@ -7,8 +7,8 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API
 const Map = () => {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
+  const [lat, setLat] = useState(47.3769);
+  const [lng, setLng] = useState(8.5417);
   const [zoom, setZoom] = useState(9);
 
   useEffect(() => {
@@ -21,7 +21,22 @@ const Map = () => {
     });
   });
 
-  return <div ref={mapContainer} className="map-container" ></div>
+  useEffect(() => {
+    if (!map.current) return; // wait for map to initialize
+      map.current.on('move', () => {
+        setLng(map.current.getCenter().lng.toFixed(4));
+        setLat(map.current.getCenter().lat.toFixed(4));
+        setZoom(map.current.getZoom().toFixed(2));
+      });
+    });
+
+  return (
+    <div ref={mapContainer} className="map-container" >
+      <div className="sidebar">
+        Latitude:{lat} | Longitude:{lng} | Zoom:{zoom}
+      </div>
+    </div>
+  )
 }
 
 export default Map
