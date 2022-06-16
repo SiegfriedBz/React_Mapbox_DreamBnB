@@ -26,7 +26,6 @@ const MapBox = ({flats}) => {
           })
         }
       </Map>
-
     </div>
   )
 }

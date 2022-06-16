@@ -1,3 +1,5 @@
 .map-container {
-  height: 600px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
   }

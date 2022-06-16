@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
   Link
 } from "react-router-dom";
 import NavBar from './components/NavBar';
 import Home from './components/Home';
-import FlatList from './components/FlatList';
-import MapBox from './components/MapBox';
+import FlatsRoute from './components/FlatsRoute';
+import About from './components/About';
+import Footer from './components/Footer';
 import { v4 as uuidv4 } from 'uuid';
 import '../src/styles/index.css';
 
@@ -29,8 +30,16 @@ function App() {
   const [flats, setFlats] = useState(initFlats)
 
   return (
-    <Home />
-
+      <Router>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/flats" element={<FlatsRoute  flats={flats} />} >
+          </Route>
+          <Route path="/about" element={<About />} />
+        </Routes>
+        <Footer  />
+      </Router>
   );
 }
 
