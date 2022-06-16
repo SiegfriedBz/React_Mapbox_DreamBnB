@@ -30,6 +30,9 @@ const NavBar = ({search}) => {
               <Link to="/" className="nav-link active" aria-current="page">Home</Link>
             </li>
             <li className="nav-item">
+              <Link to="/flats" className="nav-link">Flats</Link>
+            </li>
+            <li className="nav-item">
               <Link to="/about" className="nav-link">About</Link>
             </li>
           </ul>
