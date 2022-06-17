@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import "../styles/map.css"
 import Map, {Marker} from 'react-map-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import clsx from "clsx"
+// import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_TOKEN =  process.env.REACT_APP_MAPBOX_API;
 
@@ -13,14 +14,24 @@ const MapBox = ({flats, ...rest}) => {
     zoom: 8
   });
 
+  const [selectedFlat, setSelectedFlat] = useState(null);
+
+  // const myMarkerClass = clsx({
+  //   "btn btn-sm": true,
+  //   "btn-primary": marker.color === "blue",
+  //   "btn-warning": marker.color === "red",
+  // })
+
   const [markers, setMarkers] = useState("")
+
+
 
   useEffect(() => {
     let blueMarkers = []
 
     if(flats) {
       blueMarkers = flats.map(flat => {
-        return <Marker key={flat.id} latitude={flat.lat} longitude={flat.long} color="blue" />
+        return {id: flat.id, lat: flat.lat, long: flat.long, color:"blue"}
       })
       setMarkers(blueMarkers)
     }
@@ -28,11 +39,10 @@ const MapBox = ({flats, ...rest}) => {
     if(rest.selectedFlat) {
       let redMarker = ""
       let flat = rest.selectedFlat
-      let newBlueMarkers = blueMarkers.filter(marker => marker.key !== flat.id)
-      redMarker = <Marker key={flat.id} latitude={flat.lat} longitude={flat.long} color="red" />
+      let newBlueMarkers = blueMarkers.filter(marker => marker.id !== flat.id)
+      redMarker = {id: flat.id, lat: flat.lat, long: flat.long, color:"red"}
       setMarkers([...newBlueMarkers, redMarker])
     }
-
   }, [flats, rest.selectedFlat])
 
   console.log(markers)
@@ -46,7 +56,21 @@ const MapBox = ({flats, ...rest}) => {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={MAPBOX_TOKEN}
       >
-        {markers}
+        {markers && markers.map(marker =>
+           <Marker
+            key={marker.id}
+            latitude={marker.lat}
+            longitude={marker.long}
+            >
+            <button
+              className={clsx({
+                "btn btn-sm": true,
+                "btn-primary": marker.color === "blue",
+                "btn-warning": marker.color === "red",
+              })}>Pop</button>
+            </Marker>
+        )
+        }
       </Map>
     </div>
   )
