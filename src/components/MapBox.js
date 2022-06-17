@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import "../styles/map.css"
+import { Link } from 'react-router-dom'
 import Map, {Marker} from 'react-map-gl';
 import clsx from "clsx"
+import "../styles/map.css"
 // import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_TOKEN =  process.env.REACT_APP_MAPBOX_API;
@@ -14,38 +15,26 @@ const MapBox = ({flats, ...rest}) => {
     zoom: 8
   });
 
-  const [selectedFlat, setSelectedFlat] = useState(null);
-
-  // const myMarkerClass = clsx({
-  //   "btn btn-sm": true,
-  //   "btn-primary": marker.color === "blue",
-  //   "btn-warning": marker.color === "red",
-  // })
-
   const [markers, setMarkers] = useState("")
-
-
 
   useEffect(() => {
     let blueMarkers = []
+    let redMarker = ""
 
     if(flats) {
       blueMarkers = flats.map(flat => {
-        return {id: flat.id, lat: flat.lat, long: flat.long, color:"blue"}
+        return {...flat, color:"blue"}
       })
       setMarkers(blueMarkers)
     }
 
     if(rest.selectedFlat) {
-      let redMarker = ""
       let flat = rest.selectedFlat
-      let newBlueMarkers = blueMarkers.filter(marker => marker.id !== flat.id)
-      redMarker = {id: flat.id, lat: flat.lat, long: flat.long, color:"red"}
-      setMarkers([...newBlueMarkers, redMarker])
+      blueMarkers = blueMarkers.filter(marker => marker.id !== flat.id)
+      redMarker = {...flat, color:"red"}
+      setMarkers([...blueMarkers, redMarker])
     }
   }, [flats, rest.selectedFlat])
-
-  console.log(markers)
 
   return (
     <div className="map-container">
@@ -56,18 +45,21 @@ const MapBox = ({flats, ...rest}) => {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={MAPBOX_TOKEN}
       >
-        {markers && markers.map(marker =>
+        {flats && markers && markers.map(marker =>
            <Marker
             key={marker.id}
             latitude={marker.lat}
             longitude={marker.long}
             >
-            <button
-              className={clsx({
-                "btn btn-sm": true,
-                "btn-primary": marker.color === "blue",
-                "btn-warning": marker.color === "red",
-              })}>Pop</button>
+              <Link to={`${marker.id}`}
+                className={clsx({
+                  "btn btn-sm rounded-3 p-1": true,
+                  "btn-primary": marker.color === "blue",
+                  "btn-success": marker.color === "red",
+                })}>€{marker.price}
+              </Link>
+
+
             </Marker>
         )
         }
