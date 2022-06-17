@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import "../styles/map.css"
 import Map, {Marker} from 'react-map-gl';
-// import 'mapbox-gl/dist/mapbox-gl.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_TOKEN =  process.env.REACT_APP_MAPBOX_API;
 
@@ -16,28 +16,26 @@ const MapBox = ({flats, ...rest}) => {
   const [markers, setMarkers] = useState("")
 
   useEffect(() => {
-    let freshMarkers = []
+    let blueMarkers = []
+
     if(flats) {
-      freshMarkers = flats.map(flat => {
+      blueMarkers = flats.map(flat => {
         return <Marker key={flat.id} latitude={flat.lat} longitude={flat.long} color="blue" />
       })
-      setMarkers([freshMarkers])
-
+      setMarkers(blueMarkers)
     }
-  }, [flats])
 
-  useEffect(() => {
-    let freshMarkers = []
-    if(flats && rest.selectedFlat) {
+    if(rest.selectedFlat) {
+      let redMarker = ""
       let flat = rest.selectedFlat
-      freshMarkers = flats.map(flat => {
-        return <Marker key={flat.id} latitude={flat.lat} longitude={flat.long} color="blue" />
-      })
-      freshMarkers = [...freshMarkers, <Marker key={flat.id} latitude={flat.lat} longitude={flat.long} color="red" />]
-      setMarkers([freshMarkers])
+      let newBlueMarkers = blueMarkers.filter(marker => marker.key !== flat.id)
+      redMarker = <Marker key={flat.id} latitude={flat.lat} longitude={flat.long} color="red" />
+      setMarkers([...newBlueMarkers, redMarker])
     }
-  }, [rest.selectedFlat])
 
+  }, [flats, rest.selectedFlat])
+
+  console.log(markers)
 
   return (
     <div className="map-container">

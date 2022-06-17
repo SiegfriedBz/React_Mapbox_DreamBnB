@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 const FlatDetails = ({flats, selectedFlat, setSelectedFlat}) => {
@@ -24,7 +24,13 @@ const FlatDetails = ({flats, selectedFlat, setSelectedFlat}) => {
                   <div className="fs-6">{selectedFlat.address}</div>
                 </div>
                 <div className="d-flex justify-content-center">
+                  <div className="fs-6 fw-normal">{selectedFlat.description}</div>
+                </div>
+                <div className="d-flex justify-content-center">
                   <div className="fs-6 fw-normal">{selectedFlat.price} CHF/day</div>
+                </div>
+                <div className="d-flex justify-content-center">
+                  <button className="btn btn-primary my-1 w-50">Book</button>
                 </div>
               </div>
             </div>
