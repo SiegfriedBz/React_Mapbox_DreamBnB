@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
-import "../styles/map.css"
+import { Link } from 'react-router-dom'
 import Map, {Marker} from 'react-map-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import clsx from "clsx"
+import "../styles/map.css"
+// import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_TOKEN =  process.env.REACT_APP_MAPBOX_API;
 
 const MapBox = ({flats, ...rest}) => {
 
-  const [viewStateAll, setViewStateAll] = useState({
+  const [viewPort, setViewPort] = useState({
     latitude: 47.3983,
     longitude: 8.5417,
     zoom: 8
@@ -17,35 +19,50 @@ const MapBox = ({flats, ...rest}) => {
 
   useEffect(() => {
     let blueMarkers = []
+    let redMarker = ""
 
     if(flats) {
       blueMarkers = flats.map(flat => {
-        return <Marker key={flat.id} latitude={flat.lat} longitude={flat.long} color="blue" />
+        return {...flat, color:"blue"}
       })
       setMarkers(blueMarkers)
     }
 
     if(rest.selectedFlat) {
-      let redMarker = ""
       let flat = rest.selectedFlat
-      let newBlueMarkers = blueMarkers.filter(marker => marker.key !== flat.id)
-      redMarker = <Marker key={flat.id} latitude={flat.lat} longitude={flat.long} color="red" />
-      setMarkers([...newBlueMarkers, redMarker])
+      blueMarkers = blueMarkers.filter(marker => marker.id !== flat.id)
+      redMarker = {...flat, color:"red"}
+      setMarkers([...blueMarkers, redMarker])
     }
-
   }, [flats, rest.selectedFlat])
-
-  console.log(markers)
 
   return (
     <div className="map-container">
       <Map
-        {...viewStateAll}
-        onMove={prev => setViewStateAll(prev.viewStateAll)}
+        {...viewPort}
+        onMove={prev => setViewPort(prev.viewPort)}
+        onViewportChange={viewPort => setViewPort(viewPort)}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={MAPBOX_TOKEN}
       >
-        {markers}
+        {flats && markers && markers.map(marker =>
+           <Marker
+            key={marker.id}
+            latitude={marker.lat}
+            longitude={marker.long}
+            >
+              <Link to={`${marker.id}`}
+                className={clsx({
+                  "btn btn-sm rounded-3 p-1": true,
+                  "btn-primary": marker.color === "blue",
+                  "btn-success": marker.color === "red",
+                })}>€{marker.price}
+              </Link>
+
+
+            </Marker>
+        )
+        }
       </Map>
     </div>
   )
