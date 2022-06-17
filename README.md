@@ -2,6 +2,7 @@
 
 ![DreamBnB](https://user-images.githubusercontent.com/99029880/174274801-812d7571-bf7f-414b-8470-a4fcf81714c5.gif)
 
+![bis](https://user-images.githubusercontent.com/99029880/174391705-b283fd5f-3c05-4e8c-986f-a3b9ad5f2d0f.gif)
 
 # Getting Started with Create React App
 
