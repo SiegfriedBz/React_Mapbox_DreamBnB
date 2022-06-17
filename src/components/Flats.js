@@ -3,7 +3,7 @@ import MapBox from './MapBox';
 import { Outlet } from 'react-router-dom';
 import "../styles/backg-image.css"
 
-const Flats = ({flats}) => {
+const Flats = ({flats, selectedFlat}) => {
 
   return (
     <div className="backg-image">
@@ -13,7 +13,7 @@ const Flats = ({flats}) => {
             <FlatsList flats={flats} />
           </div>
           <div className="col-md-4">
-            <MapBox flats={flats} />
+            <MapBox flats={flats} selectedFlat={selectedFlat}/>
           </div>
         </div>
       </div>

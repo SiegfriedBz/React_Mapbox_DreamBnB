@@ -30,14 +30,16 @@ function App() {
   console.log(initFlats[0].id)
 
   const [flats, setFlats] = useState(initFlats)
+  const [selectedFlat , setSelectedFlat] = useState(undefined)
+
 
   return (
       <Router>
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="flats" element={<Flats flats={flats}/>} >
-            <Route path=":id" element={<FlatDetails flats={flats} />} />
+          <Route path="flats" element={<Flats flats={flats} selectedFlat={selectedFlat} />} >
+            <Route path=":id" element={<FlatDetails flats={flats} selectedFlat={selectedFlat} setSelectedFlat={setSelectedFlat} />} />
           </Route>
           <Route path="about" element={<About />} />
         </Routes>
