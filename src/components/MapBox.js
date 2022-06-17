@@ -7,7 +7,7 @@ const MAPBOX_TOKEN =  process.env.REACT_APP_MAPBOX_API;
 
 const MapBox = ({flats, ...rest}) => {
 
-  const [viewStateAll, setViewStateAll] = useState({
+  const [viewPort, setViewPort] = useState({
     latitude: 47.3983,
     longitude: 8.5417,
     zoom: 8
@@ -40,8 +40,9 @@ const MapBox = ({flats, ...rest}) => {
   return (
     <div className="map-container">
       <Map
-        {...viewStateAll}
-        onMove={prev => setViewStateAll(prev.viewStateAll)}
+        {...viewPort}
+        onMove={prev => setViewPort(prev.viewPort)}
+        onViewportChange={viewPort => setViewPort(viewPort)}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={MAPBOX_TOKEN}
       >
