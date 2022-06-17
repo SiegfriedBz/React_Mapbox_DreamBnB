@@ -7,9 +7,11 @@ import {
 } from "react-router-dom";
 import NavBar from './components/NavBar';
 import Home from './components/Home';
-import FlatsRoute from './components/FlatsRoute';
 import About from './components/About';
 import Footer from './components/Footer';
+import FlatsRoutes from './components/FlatsRoutes';
+import FlatList from './components/FlatList';
+import FlatDetails from './components/FlatDetails';
 import { v4 as uuidv4 } from 'uuid';
 import '../src/styles/index.css';
 
@@ -34,9 +36,10 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/flats" element={<FlatsRoute  flats={flats} />} >
+          <Route path="flats" element={<FlatsRoutes flats={flats}><FlatList flats={flats}/></FlatsRoutes>}>
+            <Route path=":id" element={<FlatsRoutes flats={flats}><FlatDetails flats={flats}/></FlatsRoutes>} />
           </Route>
-          <Route path="/about" element={<About />} />
+          <Route path="about" element={<About />} />
         </Routes>
         <Footer  />
       </Router>

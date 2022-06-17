@@ -1,7 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import "../styles/cards.css"
 
-const Flat = ({flat, selectedFlat}) => {
+const Flat = ({flat}) => {
 
   return (
     <div className="card card-category">
@@ -14,7 +15,7 @@ const Flat = ({flat, selectedFlat}) => {
           <div className="fs-6 fw-normal">{flat.price} CHF/day</div>
         </div>
       </div>
-      <button className='btn btn-primary btn-sm my-1 w-25'>Visit</button>
+      <Link to={`${flat.id}`} className='btn btn-primary btn-sm my-1 w-25'>More</Link>
     </div>
   )
 }

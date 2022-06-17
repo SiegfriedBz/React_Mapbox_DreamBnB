@@ -3,13 +3,13 @@ import "../styles/footer.css"
 
 const Footer = () => {
   return (
-    <div class="footer">
-      <div class="footer-links">
-        <a href="#"><i class="fab fa-github"></i></a>
-        <i class="fab fa-github"></i>
-        <a href="#"><i class="fab fa-linkedin" ></i></a>
+    <div className="footer">
+      <div className="footer-links">
+        <a href="#"><i className="fab fa-github"></i></a>
+        <i className="fab fa-github"></i>
+        <a href="#"><i className="fab fa-linkedin" ></i></a>
         </div>
-        <div class="footer-copyright">
+        <div className="footer-copyright">
         &copy; DreamsBnB 2022
       </div>
     </div>

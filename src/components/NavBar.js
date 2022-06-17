@@ -1,10 +1,5 @@
 import React, { useState } from 'react'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NavBar = ({search}) => {
 
@@ -30,10 +25,10 @@ const NavBar = ({search}) => {
               <Link to="/" className="nav-link active" aria-current="page">Home</Link>
             </li>
             <li className="nav-item">
-              <Link to="/flats" className="nav-link">Flats</Link>
+              <Link to="flats" className="nav-link">Flats</Link>
             </li>
             <li className="nav-item">
-              <Link to="/about" className="nav-link">About</Link>
+              <Link to="about" className="nav-link">About</Link>
             </li>
           </ul>
 
