@@ -2,14 +2,13 @@ import { useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import About from './components/About';
 import Footer from './components/Footer';
-import FlatsRoutes from './components/FlatsRoutes';
+import FlatsLayOut from './components/FlatsLayOut';
 import FlatList from './components/FlatList';
 import FlatDetails from './components/FlatDetails';
 import { v4 as uuidv4 } from 'uuid';
@@ -36,8 +35,9 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="flats" element={<FlatsRoutes flats={flats}><FlatList flats={flats}/></FlatsRoutes>}>
-            <Route path=":id" element={<FlatsRoutes flats={flats}><FlatDetails flats={flats}/></FlatsRoutes>} />
+          <Route path="/flats" element={<FlatsLayOut />}>
+            <Route path="all" element={<FlatList flats={flats} />} />
+            {/* <Route path=":id" element={<FlatDetails flats={flats} />} /> */}
           </Route>
           <Route path="about" element={<About />} />
         </Routes>
