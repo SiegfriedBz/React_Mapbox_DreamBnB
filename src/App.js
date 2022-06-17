@@ -2,14 +2,14 @@ import { useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import NavBar from './components/NavBar';
 import Home from './components/Home';
-import FlatsRoute from './components/FlatsRoute';
 import About from './components/About';
 import Footer from './components/Footer';
+import Flats from './components/Flats';
+import FlatDetails from './components/FlatDetails';
 import { v4 as uuidv4 } from 'uuid';
 import '../src/styles/index.css';
 
@@ -27,6 +27,8 @@ function App() {
     {id: uuidv4(), address: "Zurich, Switzerland", lat: 47.3983, long: 8.5417, price: 200, imgURL: "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"},
   ]
 
+  console.log(initFlats[0].id)
+
   const [flats, setFlats] = useState(initFlats)
 
   return (
@@ -34,9 +36,10 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/flats" element={<FlatsRoute  flats={flats} />} >
+          <Route path="flats" element={<Flats flats={flats}/>} >
+            <Route path=":id" element={<FlatDetails flats={flats} />} />
           </Route>
-          <Route path="/about" element={<About />} />
+          <Route path="about" element={<About />} />
         </Routes>
         <Footer  />
       </Router>

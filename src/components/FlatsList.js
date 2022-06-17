@@ -1,16 +1,16 @@
 import React from 'react'
-import Flat from './Flat'
+import FlatCard from './FlatCard'
 import "../styles/cards.css"
 
-const FlatList = ({ flats }) => {
+const FlatsList = ({ flats }) => {
   return (
     <div className="cards">
         {flats.map(flat => {
-        return <Flat key={flat.id} flat={flat} />
+        return <FlatCard key={flat.id} flat={flat} />
         })
       }
     </div>
   )
 }
 
-export default FlatList
+export default FlatsList
