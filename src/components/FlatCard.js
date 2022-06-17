@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import "../styles/cards.css"
 
-const Flat = ({flat}) => {
+const FlatCard = ({flat}) => {
 
   return (
     <div className="card card-category">
@@ -20,4 +20,4 @@ const Flat = ({flat}) => {
   )
 }
 
-export default Flat
+export default FlatCard
