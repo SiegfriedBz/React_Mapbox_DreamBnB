@@ -1,4 +1,7 @@
-# DreamBnB 
+# DreamBnB ... in progress...
+
+![DreamBnB](https://user-images.githubusercontent.com/99029880/174274801-812d7571-bf7f-414b-8470-a4fcf81714c5.gif)
+
 
 # Getting Started with Create React App
 
