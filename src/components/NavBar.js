@@ -1,14 +1,23 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
+
+const MAPBOX_TOKEN =  process.env.REACT_APP_MAPBOX_API;
 
 const NavBar = ({search}) => {
 
-  const [userInput, setUserInput] = useState('');
+  const [userLocationInput, setUserLocationInput] = useState("");
+  const [userLocationCoordinates, setUserLocationCoordinates] = useState({lat:"", long:""});
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    search(userInput)
-    setUserInput('')
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    try {
+      const resp = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${userLocationInput}.json?access_token=${MAPBOX_TOKEN}`);
+      const data = await resp.json();
+      const [ long, lat ] = data.features[0].center;
+      setUserLocationCoordinates({lat: lat, long: long});
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -37,15 +46,20 @@ const NavBar = ({search}) => {
             className="d-flex"
             >
             <input
-              onChange={(e) => setUserInput(e.target.value)}
               className="form-control me-2"
               type="text"
-              value={userInput}
+              value={userLocationInput}
+              onChange={(e) => setUserLocationInput(e.target.value)}
               placeholder="Search"
               aria-label="Search"
               />
             <button className="btn btn-dark" type="submit"><h6>Search</h6></button>
           </form>
+          {userLocationCoordinates.lat && userLocationCoordinates.long &&
+            <Navigate
+              to='/flats'
+              state= { userLocationCoordinates }/>
+          }
 
         </div>
       </div>
