@@ -1,9 +1,12 @@
+import { useState } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import FlatsList from './FlatsList';
 import MapBox from './MapBox';
-import { Outlet } from 'react-router-dom';
 import "../styles/backg-image.css"
 
 const Flats = ({flats, selectedFlat}) => {
+  const location = useLocation();
+  const [userLocation, setUserLocation] = useState(location.state);
 
   return (
     <div className="backg-image">

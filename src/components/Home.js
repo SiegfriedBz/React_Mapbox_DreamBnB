@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import "../styles/backg-image.css"
+import { Navigate } from "react-router-dom";
 import Typed from 'react-typed';
+import "../styles/backg-image.css"
 
 const MAPBOX_TOKEN =  process.env.REACT_APP_MAPBOX_API;
 
@@ -15,7 +16,6 @@ const Home = () => {
       const data = await resp.json();
       const [ long, lat ] = data.features[0].center;
       setUserLocationCoordinates({lat: lat, long: long});
-      console.log({long, lat})
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +50,11 @@ const Home = () => {
                 <button type="submit" className='btn btn-primary fw-bold my-1 w-25'>Search</button>
               </div>
             </form>
-
+            {userLocationCoordinates.lat && userLocationCoordinates.long &&
+            <Navigate
+              to='/flats'
+              state= { userLocationCoordinates }/>
+            }
         </div>
       </div>
     </div>
