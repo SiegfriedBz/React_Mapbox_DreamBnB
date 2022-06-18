@@ -31,7 +31,7 @@ const MapBox = ({flats, ...rest}) => {
     if(rest.selectedFlat) {
       let flat = rest.selectedFlat
       blueMarkers = blueMarkers.filter(marker => marker.id !== flat.id)
-      redMarker = {...flat, color:"red"}
+      redMarker = {...flat, color:"green"}
       setMarkers([...blueMarkers, redMarker])
     }
   }, [flats, rest.selectedFlat])
@@ -46,22 +46,20 @@ const MapBox = ({flats, ...rest}) => {
         mapboxAccessToken={MAPBOX_TOKEN}
       >
         {flats && markers && markers.map(marker =>
-           <Marker
+          <Marker
             key={marker.id}
             latitude={marker.lat}
             longitude={marker.long}
             >
-              <Link to={`${marker.id}`}
-                className={clsx({
-                  "btn btn-sm rounded-3 p-1": true,
-                  "btn-primary": marker.color === "blue",
-                  "btn-success": marker.color === "red",
-                })}>€{marker.price}
-              </Link>
-
-
-            </Marker>
-        )
+            <Link to={`${marker.id}`}
+              className={clsx({
+                "btn btn-sm rounded-3 p-1": true,
+                "btn-primary": marker.color === "blue",
+                "btn-success": marker.color === "green",
+              })}>€{marker.price}
+            </Link>
+          </Marker>
+          )
         }
       </Map>
     </div>
