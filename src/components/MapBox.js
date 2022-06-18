@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import Map, { Marker, Popup } from 'react-map-gl';
 import clsx from "clsx"
 import "../styles/map.css"
-// import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_TOKEN =  process.env.REACT_APP_MAPBOX_API;
 
@@ -29,6 +28,7 @@ const MapBox = ({flats, ...rest}) => {
 
     if(rest.selectedFlat) {
       let flat = rest.selectedFlat
+      console.log(flat)
       redMarker = {...flat, color:"green"}
       blueMarkers = blueMarkers.filter(marker => marker.id !== flat.id)
       blueMarkers = [...blueMarkers, redMarker]
