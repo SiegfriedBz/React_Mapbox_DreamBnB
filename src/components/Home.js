@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { Navigate } from "react-router-dom";
 import Typed from 'react-typed';
 import "../styles/backg-image.css"

@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import FlatsList from './FlatsList';
 import MapBox from './MapBox';
 import "../styles/backg-image.css"
