@@ -16,7 +16,7 @@ const Flats = ({flats, selectedFlat}) => {
             <FlatsList flats={flats} />
           </div>
           <div className="col-md-4">
-            <MapBox flats={flats} selectedFlat={selectedFlat}/>
+            <MapBox flats={flats} selectedFlat={selectedFlat} userLocation={userLocation}/>
           </div>
         </div>
       </div>

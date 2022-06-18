@@ -17,11 +17,12 @@ const MapBox = ({flats, ...rest}) => {
   const [markers, setMarkers] = useState("")
 
   useEffect(() => {
-    let blueMarkers = []
-    let redMarker = ""
+    let allMarkers = []
+    let yellowMarker = ""
+    let greenMarker = ""
 
     if(flats) {
-      blueMarkers = flats.map(flat => {
+      allMarkers = flats.map(flat => {
         return {...flat, color:"blue"}
       })
     }
@@ -29,14 +30,21 @@ const MapBox = ({flats, ...rest}) => {
     if(rest.selectedFlat) {
       let flat = rest.selectedFlat
       console.log(flat)
-      redMarker = {...flat, color:"green"}
-      blueMarkers = blueMarkers.filter(marker => marker.id !== flat.id)
-      blueMarkers = [...blueMarkers, redMarker]
+      yellowMarker = {...flat, color:"yellow"}
+      allMarkers = allMarkers.filter(marker => marker.id !== flat.id)
+      allMarkers = [...allMarkers, yellowMarker]
     }
 
-    setMarkers(blueMarkers)
+    if(rest.userLocation) {
+      let userLocation = rest.userLocation
+      console.log(userLocation)
+      greenMarker = { ...userLocation, color:"green"}
+      allMarkers = [...allMarkers, greenMarker]
+    }
 
-  }, [flats, rest.selectedFlat])
+    setMarkers(allMarkers)
+
+  }, [flats, rest.selectedFlat, rest.userLocation])
 
   return (
     <div className="map-container">
@@ -58,10 +66,13 @@ const MapBox = ({flats, ...rest}) => {
               className={clsx({
                 "btn btn-sm rounded-3 p-1": true,
                 "btn-primary": marker.color === "blue",
-                "btn-success": marker.color === "green",
+                "btn-warning": marker.color === "yellow",
               })
               }>€{marker.price}
             </Link>
+            <span className={clsx({
+                "btn btn-sm rounded-3 p-1 btn-success": marker.color === "green",
+              })}>Me</span>
           </Marker>
           )
         }
