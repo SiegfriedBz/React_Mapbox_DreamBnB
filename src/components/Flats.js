@@ -86,8 +86,15 @@ const Flats = ({
                   30min
                 </label>
               </div>
+              <div className="d-flex">
+                  <input className="form-check-input" type="radio" name="duration" id="60"
+                    onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
+                  />
+                  <label className="form-check-label mx-1" htmlFor="60">
+                    60min
+                  </label>
+              </div>
             </div>
-
             </div>
 
             <div className="d-flex justify-content-center">

@@ -87,6 +87,14 @@ console.log(fetchedUserCoordinates)
                     30min
                   </label>
                 </div>
+                <div className="d-flex">
+                  <input className="form-check-input" type="radio" name="duration" id="60"
+                    onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
+                  />
+                  <label className="form-check-label mx-1" htmlFor="60">
+                    60min
+                  </label>
+                </div>
               </div>
 
               <button type="submit" className='btn btn-primary fw-bold my-1 w-25'>Search</button>
