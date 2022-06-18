@@ -38,17 +38,14 @@ const MapBox = ({flats, selectedFlat, fetchedUserCoordinates, fetchedGeoJson }) 
     }
   }
 
-
   useEffect(() => {
     let allFlatMarkers = []
-
     // Add blue Markers to all flats
     if(flats) {
       allFlatMarkers = flats.map(flat => {
         return {...flat, color:"blue"}
       })
     }
-
     // Add a yellow Marker to selected flat
     if(selectedFlat) {
       let yellowFlatMarker = {...selectedFlat, color:"yellow"}
@@ -77,12 +74,6 @@ const MapBox = ({flats, selectedFlat, fetchedUserCoordinates, fetchedGeoJson }) 
     }
   }, [fetchedUserCoordinates])
 
-  console.log(flatMarkers[flatMarkers.length - 1])
-
-  if(userMarker) {
-    console.log(userMarker)
-  }
-
   return (
     <div className="map-container">
       <Map
@@ -109,6 +100,7 @@ const MapBox = ({flats, selectedFlat, fetchedUserCoordinates, fetchedGeoJson }) 
             </Link>
           </Marker>
           )
+
         }
         {userMarker &&
           <Marker

@@ -1,11 +1,18 @@
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({setFetchedUserCoordinates}) => {
+
+
 
   return (
     <div className="navbar sticky-top navbar-expand-lg bg-light">
       <div className="d-flex justify-content-between container-fluid px-5">
-      <Link to="/" className="nav-link active" aria-current="page">
+      <Link
+        to="/"
+        onClick={() => setFetchedUserCoordinates({lat:"", long:""})}
+        className="nav-link active"
+        aria-current="page"
+      >
         <h2 className='text-dark d-flex'><em><strong>DreamsBnB</strong></em></h2>
       </Link>
         <div className="d-flex">
@@ -16,7 +23,13 @@ const NavBar = () => {
 
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link to="/" className="nav-link active" aria-current="page">Home</Link>
+            <Link
+              to="/"
+              onClick={() => setFetchedUserCoordinates({lat:"", long:""})}
+              className="nav-link active"
+              aria-current="page"
+            >Home
+            </Link>
             </li>
             <li className="nav-item">
               <Link to="flats" className="nav-link">Flats</Link>

@@ -21,22 +21,25 @@ const Flats = ({
         <form onSubmit={handleIsochroneSearch} className="my-3">
 
           <div className="d-flex flex-column align-item-center">
-            <input
-              id="address"
-              type="text"
-              className='form-control w-50'
-              placeholder='Enter a location'
-              value={userInput.address}
-              onChange={(e) => setUserInput({...userInput, [e.target.id]: e.target.value})}
-              />
+            <div className="d-flex justify-content-center">
+              <input
+                id="address"
+                type="text"
+                className='form-control text-center w-25'
+                placeholder='Enter a location'
+                value={userInput.address}
+                onChange={(e) => setUserInput({...userInput, [e.target.id]: e.target.value})}
+                />
+            </div>
 
-            <div className="bg-white d-flex form-control w-50">
-              <h6>Choose a travel mode:</h6>
+            <div className="d-flex">
+              <div className="bg-white d-flex justify-content-around align-items-center form-control w-50">
+                <p style={{margin: 0}}>Travel mode:</p>
               <div className="d-flex ms-2">
                 <input className="form-check-input" type="radio" name="profile" id="walking"
                   onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
                   />
-                <label className="form-check-label mx-2" htmlFor="walking">
+                <label className="form-check-label mx-1" htmlFor="walking">
                   Walking
                 </label>
               </div>
@@ -44,7 +47,7 @@ const Flats = ({
                 <input className="form-check-input" type="radio" name="profile" id="cycling"
                   onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
                 />
-                <label className="form-check-label mx-2" htmlFor="cycling">
+                <label className="form-check-label mx-1" htmlFor="cycling">
                   Cycling
                 </label>
               </div>
@@ -52,19 +55,19 @@ const Flats = ({
                 <input className="form-check-input" type="radio" name="profile" id="driving"
                   onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
                 />
-                <label className="form-check-label mx-2" htmlFor="driving">
+                <label className="form-check-label mx-1" htmlFor="driving">
                   Driving
                 </label>
               </div>
             </div>
 
-            <div className="bg-white d-flex form-control w-50">
-              <h6>Choose a maximum duration: </h6>
+            <div className="bg-white d-flex justify-content-around align-items-center form-control w-50">
+              <p style={{margin: 0}}>Maximum duration:</p>
               <div className="d-flex ms-2">
                 <input className="form-check-input" type="radio" name="duration" id="10"
                   onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
                   />
-                <label className="form-check-label mx-2" htmlFor="10">
+                <label className="form-check-label mx-1" htmlFor="10">
                   10min
                 </label>
               </div>
@@ -72,7 +75,7 @@ const Flats = ({
                 <input className="form-check-input" type="radio" name="duration" id="20"
                   onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
                 />
-                <label className="form-check-label mx-2" htmlFor="20">
+                <label className="form-check-label mx-1" htmlFor="20">
                   20min
                 </label>
               </div>
@@ -80,13 +83,17 @@ const Flats = ({
                 <input className="form-check-input" type="radio" name="duration" id="30"
                   onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
                 />
-                <label className="form-check-label mx-2" htmlFor="30">
+                <label className="form-check-label mx-1" htmlFor="30">
                   30min
                 </label>
               </div>
             </div>
 
-            <button type="submit" className='btn btn-primary fw-bold my-1 w-50'>Search</button>
+            </div>
+
+            <div className="d-flex justify-content-center">
+              <button type="submit" className='btn btn-primary fw-bold my-1 w-25'>Search</button>
+            </div>
           </div>
         </form>
 

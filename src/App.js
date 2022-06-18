@@ -29,6 +29,7 @@ function App() {
     {id: uuidv4(), address: "Thun, Switzerland", description:"Lorem ipsum, adipisicing elit.", lat: 46.7580, long: 7.6280, price: 200, imgURL: "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1165&q=80"},
 
   ]
+
   //  Flats data + selection
   const [flats, setFlats] = useState(initFlats)
   const [selectedFlat, setSelectedFlat] = useState(undefined)
@@ -71,6 +72,7 @@ function App() {
       // Set GeoJson data to pass to Mapbox
       setFetchedGeoJson(isoData)
 
+
     } catch (error) {
       console.log(error);
     }
@@ -78,7 +80,7 @@ function App() {
 
   return (
       <Router>
-        <NavBar />
+        <NavBar setFetchedUserCoordinates={setFetchedUserCoordinates}/>
         <Routes>
           <Route path="/" element={
           <Home
