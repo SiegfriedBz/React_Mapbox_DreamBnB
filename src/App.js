@@ -13,6 +13,8 @@ import FlatDetails from './components/FlatDetails';
 import { v4 as uuidv4 } from 'uuid';
 import '../src/styles/index.css';
 
+const MAPBOX_TOKEN =  process.env.REACT_APP_MAPBOX_API;
+
 function App() {
 
   const initFlats = [
@@ -28,16 +30,44 @@ function App() {
 
   ]
 
-
   const [flats, setFlats] = useState(initFlats)
   const [selectedFlat , setSelectedFlat] = useState(undefined)
+
+  const [userLocationInput, setUserLocationInput] = useState("");
+  const [userLocationCoordinates, setUserLocationCoordinates] = useState({lat:"", long:""});
+
+  const handleSearchSubmit = async(e) => {
+    e.preventDefault();
+    try {
+      const resp = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${userLocationInput}.json?access_token=${MAPBOX_TOKEN}`);
+      const data = await resp.json();
+      const [ long, lat ] = data.features[0].center;
+      setUserLocationCoordinates({lat: lat, long: long});
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
       <Router>
         <NavBar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="flats" element={<Flats flats={flats} selectedFlat={selectedFlat} />} >
+          <Route path="/" element={
+          <Home
+            handleSearchSubmit={handleSearchSubmit}
+            userLocationInput={userLocationInput}
+            setUserLocationInput={setUserLocationInput}
+            userLocationCoordinates={userLocationCoordinates}
+          />} />
+          <Route path="flats" element={
+            <Flats
+               flats={flats}
+               selectedFlat={selectedFlat}
+               handleSearchSubmit={handleSearchSubmit}
+               userLocationInput={userLocationInput}
+               setUserLocationInput={setUserLocationInput}
+               userLocationCoordinates={userLocationCoordinates}
+            />} >
             <Route path=":id" element={<FlatDetails flats={flats} selectedFlat={selectedFlat} setSelectedFlat={setSelectedFlat} />} />
           </Route>
           <Route path="about" element={<About />} />

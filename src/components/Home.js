@@ -3,23 +3,7 @@ import { Navigate } from "react-router-dom";
 import Typed from 'react-typed';
 import "../styles/backg-image.css"
 
-const MAPBOX_TOKEN =  process.env.REACT_APP_MAPBOX_API;
-
-const Home = () => {
-  const [userLocationInput, setUserLocationInput] = useState("");
-  const [userLocationCoordinates, setUserLocationCoordinates] = useState({lat:"", long:""});
-
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    try {
-      const resp = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${userLocationInput}.json?access_token=${MAPBOX_TOKEN}`);
-      const data = await resp.json();
-      const [ long, lat ] = data.features[0].center;
-      setUserLocationCoordinates({lat: lat, long: long});
-    } catch (error) {
-      console.log(error);
-    }
-  }
+const Home = ({handleSearchSubmit, userLocationInput, setUserLocationInput, userLocationCoordinates}) => {
 
   return (
     <div className="backg-image" style={{height: "80vh"}}>
@@ -38,7 +22,7 @@ const Home = () => {
             />
           </div>
 
-            <form onSubmit={handleSubmit} >
+            <form onSubmit={handleSearchSubmit} >
               <div className="d-flex flex-column justify-content-start">
                 <input
                   type="text"
