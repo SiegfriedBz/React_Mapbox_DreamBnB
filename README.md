@@ -1,8 +1,12 @@
-# DreamBnB ... in progress...
+# DreamBnB ... in progress...playing with React and MapBox API : GeoCoder & Isochrone
+The App is fully functionnal but quite useless !) and is just for MapBox API call practices ! )
 
 ![DreamBnB](https://user-images.githubusercontent.com/99029880/174274801-812d7571-bf7f-414b-8470-a4fcf81714c5.gif)
 
 ![bis](https://user-images.githubusercontent.com/99029880/174391705-b283fd5f-3c05-4e8c-986f-a3b9ad5f2d0f.gif)
+
+![image](https://user-images.githubusercontent.com/99029880/174441747-9c44ef94-2af4-40cf-aeb9-c277cfded61a.png)
+
 
 # Getting Started with Create React App
 
