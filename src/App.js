@@ -29,20 +29,48 @@ function App() {
     {id: uuidv4(), address: "Thun, Switzerland", description:"Lorem ipsum, adipisicing elit.", lat: 46.7580, long: 7.6280, price: 200, imgURL: "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1165&q=80"},
 
   ]
-
+  //  Flats data + selection
   const [flats, setFlats] = useState(initFlats)
-  const [selectedFlat , setSelectedFlat] = useState(undefined)
+  const [selectedFlat, setSelectedFlat] = useState(undefined)
 
-  const [userLocationInput, setUserLocationInput] = useState("");
-  const [userLocationCoordinates, setUserLocationCoordinates] = useState({lat:"", long:""});
+  // Input for the User location (forward GeoCoder API Call) + for Isochrone API Call
+  const [userInput, setUserInput] = useState({address: "", profile:"", duration: ""});
 
-  const handleSearchSubmit = async(e) => {
+  // User Coordinates from GeoCoder API Call
+  const [fetchedUserCoordinates, setFetchedUserCoordinates] = useState({lat:"", long:""});
+
+  // GeoJson data from Isochrone API Call
+  const [fetchedGeoJson, setFetchedGeoJson] = useState("");
+
+  const handleIsochroneSearch = async(e) => {
     e.preventDefault();
+    // Get user data from the home page input
+    const {address, profile, duration} = userInput;
+    // Set duration data for the Isochrone API Call
+    const minutes = parseInt(duration);
+
     try {
-      const resp = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${userLocationInput}.json?access_token=${MAPBOX_TOKEN}`);
+      // Fetch user Coordinates from the GeoCoding API
+      const resp = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${MAPBOX_TOKEN}`);
       const data = await resp.json();
-      const [ long, lat ] = data.features[0].center;
-      setUserLocationCoordinates({lat: lat, long: long});
+      const [ userLong, userLat ] = data.features[0].center;
+
+      // Set UserCoordinates for the User Marker
+      setFetchedUserCoordinates({lat: userLat, long: userLong});
+
+      // Fetch Isochrone data from the Isochrone API
+      const urlBase = 'https://api.mapbox.com/isochrone/v1/mapbox/';
+      const lon = userLong;
+      const lat = userLat;
+
+      const query = await fetch(
+        `${urlBase}${profile}/${lon},${lat}?contours_minutes=${minutes}&polygons=true&access_token=${MAPBOX_TOKEN}`,
+        { method: 'GET' }
+      );
+      const isoData = await query.json();
+      // Set GeoJson data to pass to Mapbox
+      setFetchedGeoJson(isoData)
+
     } catch (error) {
       console.log(error);
     }
@@ -54,19 +82,20 @@ function App() {
         <Routes>
           <Route path="/" element={
           <Home
-            handleSearchSubmit={handleSearchSubmit}
-            userLocationInput={userLocationInput}
-            setUserLocationInput={setUserLocationInput}
-            userLocationCoordinates={userLocationCoordinates}
+            userInput={userInput}
+            setUserInput={setUserInput}
+            handleIsochroneSearch={handleIsochroneSearch}
+            fetchedUserCoordinates={fetchedUserCoordinates}
           />} />
           <Route path="flats" element={
             <Flats
                flats={flats}
                selectedFlat={selectedFlat}
-               handleSearchSubmit={handleSearchSubmit}
-               userLocationInput={userLocationInput}
-               setUserLocationInput={setUserLocationInput}
-               userLocationCoordinates={userLocationCoordinates}
+               userInput={userInput}
+               setUserInput={setUserInput}
+               handleIsochroneSearch={handleIsochroneSearch}
+               fetchedUserCoordinates={fetchedUserCoordinates}
+               fetchedGeoJson={fetchedGeoJson}
             />} >
             <Route path=":id" element={<FlatDetails flats={flats} selectedFlat={selectedFlat} setSelectedFlat={setSelectedFlat} />} />
           </Route>
