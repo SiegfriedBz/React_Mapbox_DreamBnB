@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
-import Map, { Marker } from 'react-map-gl';
+import Map, { Marker, Source, Layer } from 'react-map-gl';
 import clsx from "clsx"
 import { v4 as uuidv4 } from 'uuid';
 import "../styles/map.css"
 
 const MAPBOX_TOKEN =  process.env.REACT_APP_MAPBOX_API;
 
-const MapBox = ({flats, ...rest}) => {
+const MapBox = ({flats, selectedFlat, fetchedUserCoordinates, fetchedGeoJson }) => {
 
   const [viewPort, setViewPort] = useState({
     latitude: 47.3983,
@@ -17,6 +17,26 @@ const MapBox = ({flats, ...rest}) => {
 
   const [flatMarkers, setFlatMarkers] = useState("")
   const [userMarker, setUserMarker] = useState("")
+  const [geoJson, setGeoJson] = useState("")
+
+  useEffect(() => {
+    if(fetchedGeoJson) {
+      setGeoJson(fetchedGeoJson)
+    }
+
+    return () => {
+      setGeoJson("")
+    }
+  }, [fetchedGeoJson])
+
+  const layerStyle =    {
+    id: 'isoLayer',
+    type: 'fill',
+    paint: {
+      'fill-color': '#5a3fc0',
+      'fill-opacity': 0.3
+    }
+  }
 
 
   useEffect(() => {
@@ -30,10 +50,9 @@ const MapBox = ({flats, ...rest}) => {
     }
 
     // Add a yellow Marker to selected flat
-    if(rest.selectedFlat) {
-      let flat = rest.selectedFlat
-      let yellowFlatMarker = {...flat, color:"yellow"}
-      allFlatMarkers = allFlatMarkers.filter(marker => marker.id !== flat.id)
+    if(selectedFlat) {
+      let yellowFlatMarker = {...selectedFlat, color:"yellow"}
+      allFlatMarkers = allFlatMarkers.filter(marker => marker.id !== selectedFlat.id)
       allFlatMarkers = [...allFlatMarkers, yellowFlatMarker]
     }
 
@@ -43,20 +62,20 @@ const MapBox = ({flats, ...rest}) => {
       setFlatMarkers("")
     }
 
-  }, [flats, rest.selectedFlat])
+  }, [flats, selectedFlat])
 
   useEffect(() =>{
    // Add a user Marker for the user location
    let userLocation = ""
-   if(rest.userLocation) {
-    userLocation = {...rest.userLocation,  id: uuidv4()}
+   if(fetchedUserCoordinates) {
+    userLocation = {...fetchedUserCoordinates,  id: uuidv4()}
     }
     setUserMarker(userLocation)
 
     return () => {
       setUserMarker("")
     }
-  }, [rest.userLocation])
+  }, [fetchedUserCoordinates])
 
   console.log(flatMarkers[flatMarkers.length - 1])
 
@@ -88,7 +107,6 @@ const MapBox = ({flats, ...rest}) => {
               })
               }>€{marker.price}
             </Link>
-
           </Marker>
           )
         }
@@ -100,6 +118,13 @@ const MapBox = ({flats, ...rest}) => {
               <button className="btn btn-sm rounded-3 p-1 btn-success">Me</button>
           </Marker>
         }
+
+        {geoJson &&
+          <Source id="my-data" type="geojson" data={geoJson}>
+            <Layer {...layerStyle} />
+          </Source>
+        }
+
       </Map>
     </div>
   )

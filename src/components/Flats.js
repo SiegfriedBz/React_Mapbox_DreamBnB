@@ -4,50 +4,103 @@ import FlatsList from './FlatsList';
 import MapBox from './MapBox';
 import "../styles/backg-image.css"
 
-const MAPBOX_TOKEN =  process.env.REACT_APP_MAPBOX_API;
-
-const Flats = ({flats, selectedFlat}) => {
-  // Get user coordinates from the Home page search
-  const location = useLocation();
-  const [userLocation, setUserLocation] = useState(location.state);
-
-  // Get user coordinates from the Flats page search
-  const [userLocationInput, setUserLocationInput] = useState("");
-
-  const handleSearchSubmit = async(e) => {
-    e.preventDefault();
-    try {
-      const resp = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${userLocationInput}.json?access_token=${MAPBOX_TOKEN}`);
-      const data = await resp.json();
-      const [ long, lat ] = data.features[0].center;
-      setUserLocation({lat: lat, long: long});
-    } catch (error) {
-      console.log(error);
-    }
-  }
+const Flats = ({
+  flats,
+  selectedFlat,
+  userInput,
+  setUserInput,
+  handleIsochroneSearch,
+  fetchedUserCoordinates,
+  fetchedGeoJson
+}) => {
 
   return (
     <div className="backg-image">
       <div className="container my-3">
 
-      <form onSubmit={handleSearchSubmit} >
-              <div className="d-flex flex-column justify-content-start">
-                <input
-                  type="text"
-                  className='form-control w-25'
-                  placeholder='Search destination'
-                  value={userLocationInput}
-                  onChange={(e) => setUserLocationInput(e.target.value)}
+        <form onSubmit={handleIsochroneSearch} className="my-3">
+
+          <div className="d-flex flex-column align-item-center">
+            <input
+              id="address"
+              type="text"
+              className='form-control w-50'
+              placeholder='Enter a location'
+              value={userInput.address}
+              onChange={(e) => setUserInput({...userInput, [e.target.id]: e.target.value})}
+              />
+
+            <div className="bg-white d-flex form-control w-50">
+              <h6>Choose a travel mode:</h6>
+              <div className="d-flex ms-2">
+                <input className="form-check-input" type="radio" name="profile" id="walking"
+                  onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
                   />
-                <button type="submit" className='btn btn-primary fw-bold my-1 w-25'>Search</button>
+                <label className="form-check-label mx-2" htmlFor="walking">
+                  Walking
+                </label>
               </div>
-            </form>
+              <div className="d-flex">
+                <input className="form-check-input" type="radio" name="profile" id="cycling"
+                  onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
+                />
+                <label className="form-check-label mx-2" htmlFor="cycling">
+                  Cycling
+                </label>
+              </div>
+              <div className="d-flex">
+                <input className="form-check-input" type="radio" name="profile" id="driving"
+                  onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
+                />
+                <label className="form-check-label mx-2" htmlFor="driving">
+                  Driving
+                </label>
+              </div>
+            </div>
+
+            <div className="bg-white d-flex form-control w-50">
+              <h6>Choose a maximum duration: </h6>
+              <div className="d-flex ms-2">
+                <input className="form-check-input" type="radio" name="duration" id="10"
+                  onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
+                  />
+                <label className="form-check-label mx-2" htmlFor="10">
+                  10min
+                </label>
+              </div>
+              <div className="d-flex">
+                <input className="form-check-input" type="radio" name="duration" id="20"
+                  onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
+                />
+                <label className="form-check-label mx-2" htmlFor="20">
+                  20min
+                </label>
+              </div>
+              <div className="d-flex">
+                <input className="form-check-input" type="radio" name="duration" id="30"
+                  onChange={(e) => setUserInput({...userInput, [e.target.name]: e.target.id})}
+                />
+                <label className="form-check-label mx-2" htmlFor="30">
+                  30min
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" className='btn btn-primary fw-bold my-1 w-50'>Search</button>
+          </div>
+        </form>
+
         <div className="row">
           <div className="col-md-8">
             <FlatsList flats={flats} />
           </div>
           <div className="col-md-4">
-            <MapBox flats={flats} selectedFlat={selectedFlat} userLocation={userLocation}/>
+            <MapBox
+              flats={flats}
+              selectedFlat={selectedFlat}
+              fetchedUserCoordinates={fetchedUserCoordinates}
+              fetchedGeoJson={fetchedGeoJson}
+              />
           </div>
         </div>
       </div>
