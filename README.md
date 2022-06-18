@@ -3,8 +3,7 @@
 
 ![DreamBnB](https://user-images.githubusercontent.com/99029880/174274801-812d7571-bf7f-414b-8470-a4fcf81714c5.gif)
 
-![image](https://user-images.githubusercontent.com/99029880/174441747-9c44ef94-2af4-40cf-aeb9-c277cfded61a.png)
-
+![image](https://user-images.githubusercontent.com/99029880/174443960-c5634031-c503-45ab-a151-1baa5fa38af4.png)
 
 # Getting Started with Create React App
 
