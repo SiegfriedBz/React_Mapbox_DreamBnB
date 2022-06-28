@@ -1,5 +1,5 @@
 # DreamBnB ... in progress...playing with React and MapBox API : GeoCoder & Isochrone
-# The App is fully functionnal but quite useless !) and is just for MapBox API call practices ! )
+# The App is just for MapBox API call practices ! )
 
 ![DreamBnB](https://user-images.githubusercontent.com/99029880/174274801-812d7571-bf7f-414b-8470-a4fcf81714c5.gif)
 
